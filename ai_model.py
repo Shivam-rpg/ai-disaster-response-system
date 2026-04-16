@@ -1,7 +1,12 @@
-from google import genai
+import google.generativeai as genai
 from config import GEMINI_API_KEY
 
-client = genai.Client(api_key=GEMINI_API_KEY)
+# Configure Gemini
+genai.configure(api_key=GEMINI_API_KEY)
+
+# Create model (CORRECT WAY)
+model = genai.GenerativeModel("gemini-2.0-flash")
+
 
 def analyze_message(message):
 
@@ -30,8 +35,6 @@ def analyze_message(message):
         "disease", "outbreak", "medical", "hospital",
         "immunization", "vaccine", "health", "supplies",
         "medicine", "medicines",
-
-        # 🔥 important real-world terms
         "pregnant", "pregnancy", "baby", "childbirth",
         "delivery", "mother", "maternal"
     ]):
@@ -66,10 +69,7 @@ def analyze_message(message):
         """
 
         try:
-            response = client.models.generate_content(
-                model="gemini-2.0-flash",
-                contents=prompt
-            )
+            response = model.generate_content(prompt)
 
             result = response.text.strip().lower()
 

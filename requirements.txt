@@ -1,5 +1,4 @@
 streamlit
 pandas
-matplotlib
-google-generativeai
 python-dotenv
+google-generativeai
